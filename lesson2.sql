@@ -101,10 +101,13 @@ SELECT * FROM subjects;
 INSERT INTO teachers VALUES(6, 'Narayan', '1982-01-01', 100500.1);
 DESCRIBE teachers;
 SELECT * FROM teachers;
-INSERT INTO students VALUES(32, 400034983, 'Bart', 'Simpson'); -- Doesn't work (col 1 is auto increment)
+INSERT INTO students VALUES(4, 22, 400034983, 'Bart', 'Simpson'); -- NB: student_id (PK) is auto increment
+INSERT INTO students VALUES(2, 52, 400344894, 'Homer', 'Simpson'); 
+INSERT INTO students(student_age, passport, first_name, last_name) VALUES(24, 400034983, 'Lisa', 'Simpson'); -- student_id's are now 1 2 4 5
 DESCRIBE students;
 SELECT * FROM students;
-INSERT INTO subjects VALUES (6, 'Narayan', '1982-01-01', 100500.1); -- Doesn't work (col 1 is auto increment)
+INSERT INTO subjects VALUES (10, 3, 'DB', '2022-08-03'); -- NB: subject_id (PK) is auto increment
+INSERT INTO subjects (trainer_id, subject_name, start_date) VALUES (3, 'DB', '2022-08-03'); -- subject_id's are now 1 2 3 4 10 11
 DESCRIBE subjects;
 SELECT * FROM subjects;
 
