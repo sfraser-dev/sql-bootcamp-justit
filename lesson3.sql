@@ -146,7 +146,7 @@ SELECT * FROM subjects;
 DELETE FROM teachers WHERE trainer_name='Tim';
 SELECT * FROM teachers;
 
--- (Task 2.4.2.2) Remove duplicate entry for WebDev using aliases.
+-- (Task 2.4.2.2) Remove duplicate entry for WebDev using aliases (COPIED FROM ANSWER).
 DELETE s1 FROM subjects s1
   INNER JOIN subjects s2
   WHERE s1.subject_name=s2.subject_name AND s1.subject_id < s2.subject_id;
@@ -228,3 +228,8 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS; -- Ignore the title row.
 -- Print the table filled from the csv file. 
 SELECT * FROM medium_table;
+-- Count how many people share a first name using an alias (COPIED FROM ANSWER).
+SELECT first_name, COUNT(first_name) AS count_of_names
+FROM medium_table
+GROUP BY first_name
+HAVING COUNT(*) > 1;
