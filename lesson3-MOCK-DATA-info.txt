@@ -1,0 +1,9 @@
+https://www.youtube.com/watch?v=6t-acwHvBnk
+https://www.mysqltutorial.org/import-csv-file-mysql-table/
+
+Put the mock csv data from Mockaroo.com into:
+C:\ProgramData\MySQL\MySQL Server 8.0\Uploads
+as suggested in the Youtube video.
+
+Putting the csv data in a specific folder is something
+unique to MySQL.

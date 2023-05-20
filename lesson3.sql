@@ -198,11 +198,33 @@ CREATE TABLE wee_table (
   name VARCHAR(15)
 );
 -- Load the data from the csv file into the table created to hold this data.
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\wee.csv'
+-- MySQL has a specific folder to use for holding files that being read or it'll
+-- generate an error (C:\ProgramData\MySQL\MySQL Server 8.0\Uploads).
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\MOCK_DATA_2cols_5rows.csv'
 INTO TABLE wee_table
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+IGNORE 1 ROWS; -- Ignore the title row.
 -- Print the table filled from the csv file. 
 SELECT * FROM wee_table;
+-- ---------- a bigger test csv file from Mockaroo.com 6 cols 200 rows ----------
+CREATE TABLE medium_table (
+  id INT PRIMARY KEY,
+  first_name VARCHAR(25),
+  last_name VARCHAR(25),
+  email VARCHAR(40),
+  gender VARCHAR(25),
+  ip_address VARCHAR(25)
+);
+-- Load the data from the csv file into the table created to hold this data.
+-- MySQL has a specific folder to use for holding files that being read or it'll
+-- generate an error (C:\ProgramData\MySQL\MySQL Server 8.0\Uploads).
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\MOCK_DATA_6cols_200rows.csv'
+INTO TABLE medium_table
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS; -- Ignore the title row.
+-- Print the table filled from the csv file. 
+SELECT * FROM medium_table;
