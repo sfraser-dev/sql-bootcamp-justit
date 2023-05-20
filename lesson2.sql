@@ -1,8 +1,12 @@
+-- Numbering.
+-- X.Y where X is the "day" and Y is a sequential lesson count.
+-- Some "days" had multiple lessons.
+
 -- For testing all code at once.
 DROP DATABASE IF EXISTS class;
 
 -- 
--- DAY 1 START - Create then destroy a database as a test.
+-- LESSON 1.1 - Create then destroy a database as a test.
 --
 
 CREATE DATABASE class;
@@ -14,11 +18,10 @@ CREATE DATABASE class;
 USE class;
 
 -- 
--- DAY 2 START (mix) - Create tables.
--- DAY 4 START (mix) - Alter tables.
+-- LESSON 1.2 - Create tables and alter tables.
 -- 
 
--- (1) Create a table in the DB.
+-- (Task 1) Create a table in the DB.
 CREATE TABLE trainer(
   trainer_id INT PRIMARY KEY,
   trainer_name VARCHAR(15),
@@ -27,14 +30,14 @@ CREATE TABLE trainer(
 -- View the structure / format of this table.
 DESCRIBE trainer;
 
--- (2) Create another table (with a check) in the DB.
+-- (Task 2) Create another table (with a check) in the DB.
 CREATE TABLE students(
   student_id INT PRIMARY KEY AUTO_INCREMENT,
   student_name VARCHAR(30),
   student_age INT NOT NULL,
   CHECK(student_age >= 18 AND student_age < 100));
 
--- (3) A subject table using an enum.
+-- (Task 3) A subject table using an enum.
 CREATE TABLE subjects(
   subject_id INT PRIMARY KEY AUTO_INCREMENT,
   trainer_id INT NOT NULL,
@@ -71,7 +74,7 @@ ALTER TABLE students MODIFY COLUMN student_number INT AUTO_INCREMENT;
 ALTER TABLE teachers MODIFY COLUMN salary DECIMAL(18,5) DEFAULT 30000.10;
 
 -- 
--- DAY 3 START - Inserting data into tables.
+-- Lesson 2.3 - Inserting data into tables.
 -- 
 
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(1, "Zak", '1996-09-20',20000.3);
