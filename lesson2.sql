@@ -1,6 +1,8 @@
 -- Numbering.
--- X.Y where X is the "day" and Y is a sequential lesson count.
+-- W.X where W is the "day" and X is a sequential lesson count.
 -- Some "days" had multiple lessons.
+-- Task W.X.Y.Z would be day.lesson.taskInteger.taskDecimal
+-- Challenge W.X.Y.Z would be day.lesson.challengeInteger.challengeDecimal
 
 -- For testing all code at once.
 DROP DATABASE IF EXISTS class;
@@ -80,7 +82,7 @@ INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(1, "Z
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(2, 'Tim','1994-01-01',15000.2);
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(3, 'Christain','1993-01-01',35900.3);
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary)
-  VALUES(4, 'Christain','1993-01-01',35900.3), (5, 'Waqas', '1922-01-01', 50000.2);
+  VALUES(4, 'Richard', '1969-01-01', 100900.3), (5, 'Waqas', '1922-01-01', 50000.2);
 DESCRIBE teachers;
 SELECT * FROM teachers;
 
@@ -117,4 +119,48 @@ SELECT * FROM subjects;
 -- 
 -- Lesson 2.4 - Update and delete data.
 -- 
--- (Task 2.4.1) A subject table using an enum.
+-- (Task 2.4.1.1, 2.4.1.2) Give the teachers a pay rise.
+UPDATE teachers SET salary = 30000.1 WHERE salary < 25000.0; 
+UPDATE teachers SET salary = 80000 WHERE trainer_name = 'Richard';
+SELECT * FROM teachers;
+
+-- (Task 2.4.1.3) Update all student ages by 1.
+UPDATE students SET student_age = student_age + 1;
+SELECT * FROM students;
+
+-- (Challenge 2.4.1.1) Waqas is teaching all WebDev courses now.
+UPDATE subjects SET trainer_id=5 WHERE subject_name='WebDev';
+SELECT * FROM subjects;
+
+-- (Challenge 2.4.1.2) All teachers get 2% pay rise.
+UPDATE teachers SET salary = salary * 1.02;
+SELECT * FROM teachers;
+
+-- (Challenge 2.4.1.3)
+UPDATE subjects SET start_date='2023-07-10' WHERE subject_id=3;
+SELECT * FROM subjects;
+
+-- (Task 2.4.2.1) Tim is leaving.
+DELETE FROM teachers WHERE trainer_name='Tim';
+SELECT * FROM teachers;
+
+-- (Task 2.4.2.2) Remove duplicate entry for WebDev using aliases.
+DELETE s1 FROM subjects s1
+  INNER JOIN subjects s2
+  WHERE s1.subject_name=s2.subject_name AND s1.subject_id < s2.subject_id;
+SELECT * FROM subjects;
+
+-- (Challenge 2.4.2.1) Remove Waqas from teachers respecting constraints.
+UPDATE subjects SET trainer_id=6 WHERE trainer_id=5; -- Waqas has trainer_id 5
+DELETE FROM teachers WHERE trainer_name='Waqas';
+SELECT * FROM subjects;
+SELECT * FROM teachers;
+
+-- (Challenge 2.4.2.2) Zak no longer teaching and needs to removed from the teachers
+-- table. This cannot be done as Zak is referenced in the subjects table. This would
+-- not have had happened if we had used ON CASCADE DELETE when creating the subjects table.
+ALTER TABLE subjects DROP FOREIGN KEY trainer_id;
+ALTER TABLE subjects ADD FOREIGN KEY(trainer_id) REFERENCES teachers(trainer_id) ON DELETE CASCADE;
+DELETE FROM teachers WHERE trainer_name='Zak';
+SELECT * FROM subjects;
+SELECT * FROM teachers;
