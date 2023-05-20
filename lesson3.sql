@@ -233,3 +233,16 @@ SELECT first_name, COUNT(first_name) AS count_of_names
 FROM medium_table
 GROUP BY first_name
 HAVING COUNT(*) > 1;
+
+-- (Task 3.5.2.2) Born after 2000?
+SELECT trainer_name, trainer_dob FROM teachers WHERE YEAR(trainer_dob) > 2000;
+
+-- (Task 3.5.2.3) Sum the wages of all the teachers using an alias.
+SELECT COUNT(salary) AS count_salary FROM teachers; -- this basically counts how many rows there are
+SELECT SUM(salary) AS total_salary FROM teachers; -- replace the count function with a sum function
+
+-- (Challenge 3.5.1) Capitalise names and order by salary.
+SELECT UPPER(trainer_name), salary FROM teachers ORDER BY salary DESC;
+
+-- (Challenge 3.5.2) Count subject_names. Group and order by the subject_name too.
+SELECT COUNT(subject_name) AS count, subject_name FROM subjects GROUP BY subject_name ORDER BY subject_name;
