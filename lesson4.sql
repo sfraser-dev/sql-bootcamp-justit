@@ -175,7 +175,7 @@ SELECT * FROM students;
 SELECT student_number, last_name FROM students;
 SELECT * FROM teachers WHERE trainer_name='Richard'; 
 
--- (Tasks 3.5.1.4) Add two new teacher rows.
+-- (Task 3.5.1.4) Add two new teacher rows.
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary)
   VALUES(7, 'Richard', '2000-06-01', 90000), (8, 'Zak', '2001-05-01', 89000);
 SELECT * FROM teachers;
@@ -193,7 +193,7 @@ SELECT * FROM teachers WHERE trainer_name='Zak' OR trainer_name='Richard' AND sa
 -- 5,Alberto
 -- ---------- tiny test csv file end ----------
 -- Create a table to hold csv data.
-CREATE TABLE wee_table (
+CREATE TABLE my_wee_table (
   id INT PRIMARY KEY,
   name VARCHAR(15)
 );
@@ -201,15 +201,15 @@ CREATE TABLE wee_table (
 -- MySQL has a specific folder to use for holding files that being read or it'll
 -- generate an error (C:\ProgramData\MySQL\MySQL Server 8.0\Uploads).
 LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\MOCK_DATA_2cols_5rows.csv'
-INTO TABLE wee_table
+INTO TABLE my_wee_table
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS; -- Ignore the title row.
 -- Print the table filled from the csv file. 
-SELECT * FROM wee_table;
+SELECT * FROM my_wee_table;
 -- ---------- a bigger test csv file from Mockaroo.com 6 cols 200 rows ----------
-CREATE TABLE medium_table (
+CREATE TABLE my_medium_table (
   id INT PRIMARY KEY,
   first_name VARCHAR(25),
   last_name VARCHAR(25),
@@ -221,16 +221,16 @@ CREATE TABLE medium_table (
 -- MySQL has a specific folder to use for holding files that being read or it'll
 -- generate an error (C:\ProgramData\MySQL\MySQL Server 8.0\Uploads).
 LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\MOCK_DATA_6cols_200rows.csv'
-INTO TABLE medium_table
+INTO TABLE my_medium_table
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS; -- Ignore the title row.
 -- Print the table filled from the csv file. 
-SELECT * FROM medium_table;
+SELECT * FROM my_medium_table;
 -- Count how many people share a first name using an alias (COPIED FROM ANSWER).
 SELECT first_name, COUNT(first_name) AS count_of_names
-FROM medium_table
+FROM my_medium_table
 GROUP BY first_name
 HAVING COUNT(*) > 1;
 
@@ -246,3 +246,26 @@ SELECT UPPER(trainer_name), salary FROM teachers ORDER BY salary DESC;
 
 -- (Challenge 3.5.2) Count subject_names. Group and order by the subject_name too.
 SELECT COUNT(subject_name) AS count, subject_name FROM subjects GROUP BY subject_name ORDER BY subject_name;
+
+-- -----------------------------------------------------------
+-- Lesson 4.6 - Combining data with union.
+-- -----------------------------------------------------------
+-- (Task 4.6.1.1) Create a new table.
+CREATE TABLE admin_staff(staff_id INT PRIMARY KEY, staff_name VARCHAR(15),
+  staff_dob DATE, salary DECIMAL(20,5));
+INSERT INTO admin_staff VALUES (1, 'Shamira','1991-01-01', 15000.3);
+INSERT INTO admin_staff VALUES (2, 'Karl','1991-01-01', 15000.3);
+SELECT * FROM admin_staff;
+-- (Task 4.6.1.2) The tables have exactky the same columns so can use union on them all.
+SELECT * FROM teachers UNION SELECT * FROM admin_staff;
+-- (Task 4.6.1.3) Only those born after 1990.
+SELECT * FROM teachers WHERE YEAR(trainer_dob) > 1990
+  UNION SELECT * FROM admin_staff WHERE YEAR(staff_dob) > 1990;
+-- (Challenge 4.4.1) 
+SELECT * FROM teachers WHERE salary < 40000 UNION SELECT * FROM admin_staff WHERE salary < 35000;
+-- (Challenge 4.4.2) Use aliases to give better column names (as trainers are also staff members).
+SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary, SUM(salary * 1.1) AS bonus FROM teachers WHERE salary < 40000
+  UNION SELECT staff_id, staff_name, staff_dob AS dob, salary FROM admin_staff WHERE salary < 35000;
+-- (Challenge 4.4.3) From the previous query, show what givint the teachers a 10% bonus and staff a 20% bonus looks like.
+SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary, salary*0.1 AS bonus FROM teachers WHERE salary < 40000 GROUP BY trainer_id
+  UNION SELECT staff_id, staff_name, staff_dob AS dob, salary, salary*0.2 AS bonus FROM admin_staff WHERE salary < 35000;
