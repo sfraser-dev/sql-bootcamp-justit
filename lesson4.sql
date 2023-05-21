@@ -266,6 +266,6 @@ SELECT * FROM teachers WHERE salary < 40000 UNION SELECT * FROM admin_staff WHER
 -- (Challenge 4.4.2) Use aliases to give better column names (as trainers are also staff members).
 SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary, SUM(salary * 1.1) AS bonus FROM teachers WHERE salary < 40000
   UNION SELECT staff_id, staff_name, staff_dob AS dob, salary FROM admin_staff WHERE salary < 35000;
--- (Challenge 4.4.3) From the previous query, show what givint the teachers a 10% bonus and staff a 20% bonus looks like.
+-- (Challenge 4.4.3) From the previous query, show what giving the teachers a 10% bonus and staff a 20% bonus looks like.
 SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary, salary*0.1 AS bonus FROM teachers WHERE salary < 40000 GROUP BY trainer_id
   UNION SELECT staff_id, staff_name, staff_dob AS dob, salary, salary*0.2 AS bonus FROM admin_staff WHERE salary < 35000;
