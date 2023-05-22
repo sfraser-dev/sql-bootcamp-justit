@@ -293,3 +293,11 @@ SELECT * FROM subjects
   INNER JOIN teachers
   ON subjects.trainer_id = teachers.trainer_id
   WHERE teachers.trainer_name='Christain'; 
+
+-- (Challenge 6.7.1.1) We can DELETE data from one table using an INNER JOIN. Work out how to achieve this.
+DELETE subjects FROM subjects
+  INNER JOIN teachers
+  ON subjects.trainer_id = teachers.trainer_id
+  WHERE teachers.trainer_name='Christain';
+SELECT * FROM subjects;  -- Subject row that made the inner join is removed.
+SELECT * FROM teachers;  -- Teachers table unaffected.
