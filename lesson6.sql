@@ -264,8 +264,32 @@ SELECT * FROM teachers WHERE YEAR(trainer_dob) > 1990
 -- (Challenge 4.4.1) 
 SELECT * FROM teachers WHERE salary < 40000 UNION SELECT * FROM admin_staff WHERE salary < 35000;
 -- (Challenge 4.4.2) Use aliases to give better column names (as trainers are also staff members).
-SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary, SUM(salary * 1.1) AS bonus FROM teachers WHERE salary < 40000
-  UNION SELECT staff_id, staff_name, staff_dob AS dob, salary FROM admin_staff WHERE salary < 35000;
+SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary FROM teachers WHERE salary < 40000 GROUP BY trainer_id
+  UNION SELECT * FROM admin_staff WHERE salary < 35000 GROUP BY staff_id;
 -- (Challenge 4.4.3) From the previous query, show what giving the teachers a 10% bonus and staff a 20% bonus looks like.
 SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, salary, salary*0.1 AS bonus FROM teachers WHERE salary < 40000 GROUP BY trainer_id
   UNION SELECT staff_id, staff_name, staff_dob AS dob, salary, salary*0.2 AS bonus FROM admin_staff WHERE salary < 35000;
+
+-- -----------------------------------------------------------
+-- Lesson 5.6.5 - There was no lesson 5 (but I created a lesson 5 using Richard's simple tables with simple inner join example (in a different file)).
+-- -----------------------------------------------------------
+
+-- -----------------------------------------------------------
+-- Lesson 6.7 - Inner join.
+-- -----------------------------------------------------------
+-- (Task 6.7.1.1) Inner join teachers and subjects tables.
+SELECT teachers.trainer_id, teachers.trainer_name, subjects.subject_name FROM teachers	 
+  INNER JOIN subjects 
+  ON teachers.trainer_id = subjects.trainer_id;
+
+-- (Task 6.7.1.2) Can you explain what impact the removal of the ON clause has on the results?
+-- "Without an ON clause the query will take every field from the left and right,
+-- attempting to pair them up regardless of PK and FK relationships.
+-- This will result in records being duplicated and incorrect results."
+
+-- (Task 6.7.1.3) Create a query to SELECT all fields from subjects and teachers. Subjects should be the left table and teachers
+-- should be the right. The ON clause should be on trainer_id from both tables. Include a WHERE trainer_name = ‘Christain’.
+SELECT * FROM subjects
+  INNER JOIN teachers
+  ON subjects.trainer_id = teachers.trainer_id
+  WHERE teachers.trainer_name='Christain'; 
