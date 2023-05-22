@@ -21,18 +21,24 @@ INSERT INTO customers VALUES
   (3, 'Anotonio');
   
 -- Simple inner join of orders and customers tables.
+-- Returns one row where customer_id=2 from both tables.
 SELECT * FROM orders
   INNER JOIN customers
   ON orders.customer_id = customers.customer_id;
 
-/*
--- Uncomment code block to add more data to table before performing inner join.
--- Add new data (row) to orders table.
+-- Add new data (rows) to orders table.
 INSERT INTO orders VALUES
-  (10311, 3, '1996-09-18');
+  (10309, 3, '1996-09-18'),
+  (10311, 2, '1996-09-18');
   
--- Simple inner join of orders and customers tables.
+-- Returns three rows, where customer_id=2 or customer_id=3 in both tables.
+-- Note customer_id=2 ('Ana') has two separate orders, hence an extra row. 
 SELECT * FROM orders
   INNER JOIN customers
   ON orders.customer_id = customers.customer_id;
-*/
+
+-- Now returns two rows, where customer_id=2 in both tables.
+SELECT * FROM orders
+  INNER JOIN customers
+  ON orders.customer_id = customers.customer_id
+  WHERE orders.customer_id = 2;
