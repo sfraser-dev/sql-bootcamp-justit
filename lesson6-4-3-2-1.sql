@@ -89,7 +89,7 @@ DESCRIBE teachers;
 SELECT * FROM teachers;
 
 -- (Challenge 2.3.1)  
-INSERT INTO students(student_age, passport, first_name, last_name) VALUES(18, 10540523, 'Harry', 'Biker');
+INSERT INTO students(student_age, passport, first_name, last_name) VALUES(18, 105405239, 'Harry', 'Biker');
 DESCRIBE students;
 SELECT * FROM students;
 
@@ -110,7 +110,7 @@ DESCRIBE teachers;
 SELECT * FROM teachers;
 INSERT INTO students VALUES(4, 22, 400034983, 'Bart', 'Simpson'); -- NB: student_id (PK) is auto increment
 INSERT INTO students VALUES(2, 52, 400344894, 'Homer', 'Simpson'); 
-INSERT INTO students(student_age, passport, first_name, last_name) VALUES(24, 400034983, 'Lisa', 'Simpson'); -- student_id's are now 1 2 4 5
+INSERT INTO students(student_age, passport, first_name, last_name) VALUES(24, 400034982, 'Lisa', 'Simpson'); -- student_id's are now 1 2 4 5
 DESCRIBE students;
 SELECT * FROM students;
 INSERT INTO subjects VALUES (10, 3, 'DB', '2022-08-03'); -- NB: subject_id (PK) is auto increment
