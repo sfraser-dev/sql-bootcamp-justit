@@ -30,3 +30,20 @@ SELECT * FROM students LEFT JOIN enrollments ON student_number = student_id;
 
 -- (Task 7.8.1.4) Right join. Query return seven rows (8th row of students isn't included).
 SELECT * FROM students RIGHT JOIN enrollments ON student_number = student_id;
+
+-- (Task 7.8.1.5) Left join using subjects and enrollements.
+SELECT * FROM subjects LEFT JOIN enrollments ON subjects.subject_id = enrollments.subject_id;
+
+-- Challenge (7.8.1) Join the tables. Delete rows in enrollments where the condition is met in the joined table.
+-- The enrollement table is changed. 
+DELETE enrollments FROM enrollments LEFT JOIN subjects ON enrollments.subject_id=subjects.subject_id WHERE trainer_id=6;
+
+-- Challenge (7.8.2) Combining multiple tables using multiple joins.
+-- A single left join of enrollments and students (LJES, left join enrollment students).
+SELECT enrollments.enrollment_id, students.student_number
+  FROM enrollments LEFT JOIN students ON enrollments.student_id = students.student_number;
+-- Now left join LJES with the subjects table.
+SELECT enrollments.enrollment_id, students.student_number, subjects.subject_name
+  FROM enrollments LEFT JOIN students ON enrollments.student_id = students.student_number
+  LEFT JOIN subjects ON enrollments.subject_id = subjects.subject_id;
+ 
