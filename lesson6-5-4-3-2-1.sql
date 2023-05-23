@@ -271,7 +271,7 @@ SELECT trainer_id AS staff_id, trainer_name AS staff_name, trainer_dob AS dob, s
   UNION SELECT staff_id, staff_name, staff_dob AS dob, salary, salary*0.2 AS bonus FROM admin_staff WHERE salary < 35000;
 
 -- -----------------------------------------------------------
--- Lesson 5.6.5 - There was no lesson 5 (but I created a lesson 5 using Richard's simple tables with simple inner join example (in a different file)).
+-- Lesson 5 - There was no lesson 5.
 -- -----------------------------------------------------------
 
 -- -----------------------------------------------------------
