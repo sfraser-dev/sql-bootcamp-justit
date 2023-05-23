@@ -11,10 +11,10 @@ CREATE TABLE enrollments (
 );
 
 -- Add more rows / records to the students and subjects tables. Studens now has 8 rows and subjects has 7 rows.
-INSERT INTO students VALUES(3, 48, 400034987, 'Marge', 'Simpson'); 
-INSERT INTO students VALUES(6, 48, 400034988, 'Maggie', 'Simpson');
-INSERT INTO students VALUES(7, 35, 400074601, 'Barney', 'Gumble'); 
-INSERT INTO students VALUES(8, 35, 400054345, 'Krusty', 'Clown'); 
+INSERT INTO students VALUES (3, 48, 400034987, 'Marge', 'Simpson'); 
+INSERT INTO students VALUES (6, 48, 400034988, 'Maggie', 'Simpson');
+INSERT INTO students VALUES (7, 35, 400074601, 'Barney', 'Gumble'); 
+INSERT INTO students VALUES (8, 35, 400054345, 'Krusty', 'Clown'); 
 INSERT INTO subjects VALUES (1, 6, 'DB', '2022-08-03'); 
 INSERT INTO subjects VALUES (3, 7, 'WebDev', '2022-08-03'); 
 INSERT INTO subjects VALUES (5, 8, 'SwDev', '2022-05-28'); 
