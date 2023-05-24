@@ -104,7 +104,6 @@ INSERT INTO EngVan (VanReg, VanMake, VanModel, EngID, VMileage) VALUES
 ('UVW654', 'Toyota', 'Camry', '2', 20000),
 ('XYZ987', 'Ford', 'F-150', '3', 30000);
 
-
 INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
 (1, 'ABC123', 'RST321', '2023-05-24', '10:00', 'New York'),
 (2, 'DEF456', 'UVW654', '2023-05-24', '11:00', 'Los Angeles'),
@@ -116,3 +115,15 @@ INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
 (8, 'GHI789', 'XYZ987', '2023-06-01', '11:00', 'Chicago'),
 (9, 'JKL012', 'RST321', '2023-06-01', '12:00', 'Dallas'),
 (10, 'MNO345', 'UVW654', '2023-06-01', '10:00', 'Miami');
+
+/*****************
+***** TASK 3 ***** 
+*****************/
+
+-- 3.1 Names of members who live in NY.
+SELECT MFName, MLName FROM Members WHERE MLoc = 'New York';
+
+-- 3.2 All vehicles registered to the company.
+SELECT VehReg, VehMake, VehModel FROM vehicle;
+
+-- 3.3 The number of engineers that work for the company.
