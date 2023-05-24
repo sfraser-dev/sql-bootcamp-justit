@@ -146,3 +146,21 @@ SELECT COUNT(*) AS 'number of times vehicle "DEF456" has broken down' FROM break
 SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM breakdown GROUP BY VehReg;
 -- Return only the vehicles that have broken down more than once.
 SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
+
+/*****************
+***** TASK 4 ***** 
+*****************/
+
+-- Create membership type table.
+CREATE TABLE MshipType (
+  MTID INT NOT NULL AUTO_INCREMENT,
+  Type VARCHAR(6) NOT NULL,
+  MPrice DECIMAL(4, 2) NOT NULL,
+  PRIMARY KEY (MTID)
+);
+
+-- Populate membership type table.
+INSERT INTO MshipType (Type, MPrice) VALUES
+('Gold', 99.99),
+('Silver', 59.99),
+('Bronze', 39.99);
