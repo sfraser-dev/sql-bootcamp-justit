@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS car_breakdown_company;
-CREATE DATABASE car_breakdown_company;
-USE car_breakdown_company;
+DROP DATABASE IF EXISTS CarBreakdownCompany;
+CREATE DATABASE CarBreakdownCompany;
+USE CarBreakdownCompany;
 
 /*****************
 ***** TASK 1 ***** 
@@ -164,3 +164,16 @@ INSERT INTO MshipType (Type, MPrice) VALUES
 ('Gold', 99.99),
 ('Silver', 59.99),
 ('Bronze', 39.99);
+
+/*****************
+***** TASK 5 ***** 
+*****************/
+-- Add MTID column to members, allow null and set it to FK.
+ALTER TABLE Members ADD MTID INT NULL;
+ALTER TABLE Members ADD CONSTRAINT Members_MTID_FKmembers FOREIGN KEY (MTID) REFERENCES MshipType (MTID);
+-- Assign values to the foreign keys in Members. 
+UPDATE Members SET MTID=3 WHERE MemberID=1;
+UPDATE Members SET MTID=1 WHERE MemberID=2;
+UPDATE Members SET MTID=2 WHERE MemberID=3;
+UPDATE Members SET MTID=2 WHERE MemberID=4;
+UPDATE Members SET MTID=3 WHERE MemberID=5;
