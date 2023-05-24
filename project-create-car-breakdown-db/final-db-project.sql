@@ -134,19 +134,19 @@ SELECT COUNT(*) AS 'number of engineers' FROM Engineer;
 SELECT COUNT(*) AS 'number of members' FROM Members;
 
 -- 3.5 All the breakdowns after June.
-SELECT * FROM breakdown WHERE BDDATE >= '2023-07-01';
+SELECT * FROM Breakdown WHERE BDDATE >= '2023-07-01';
 
 -- 3.6 All the breakdowns between June 1st and June 30th inclusive.
-SELECT * FROM breakdown WHERE BDDate BETWEEN '2023-06-01' AND '2023-06-30';
+SELECT * FROM Breakdown WHERE BDDate BETWEEN '2023-06-01' AND '2023-06-30';
 
 -- 3.7 The number of times member vehicle with registration 'DEF456' has broken down.
-SELECT COUNT(*) AS 'number of times vehicle "DEF456" has broken down' FROM breakdown WHERE VehReg = 'DEF456'; 
+SELECT COUNT(*) AS 'number of times vehicle "DEF456" has broken down' FROM Breakdown WHERE VehReg = 'DEF456'; 
 
 -- 3.8 The number of vehicles that have broken down more than once.
 -- List the number of times each vehicle has broken down.
-SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM breakdown GROUP BY VehReg;
+SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg;
 -- Return only the vehicles that have broken down more than once.
-SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
+SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
 
 /*******************************************************************
 ****************************** TASK 4 ****************************** 
@@ -188,6 +188,13 @@ UPDATE Members SET MTID=2 WHERE MemberID=8;
 *******************************************************************/
 
 -- 6.1 Show all the vehicles that each member owns.
-SELECT Members.MemberID, COUNT(Vehicle.VehReg) AS 'vehicles owned' FROM Members
-LEFT JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
-GROUP BY Members.MemberID;
+SELECT Members.MFName, Members.MLName, Vehicle.VehMake, Vehicle.VehModel FROM Members
+INNER JOIN Vehicle
+ON Members.MemberID = Vehicle.MemberID
+ORDER BY Members.MFName;
+
+-- 6.2 Show how many vehicles each member owns in descending order.
+SELECT Members.MFName, Members.MLName, COUNT(Vehicle.VehReg) FROM Members
+INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
+GROUP BY Members.MFName, Members.MLName
+ORDER BY COUNT(Vehicle.VehReg) DESC;
