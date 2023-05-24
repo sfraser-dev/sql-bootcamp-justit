@@ -194,13 +194,13 @@ ON Members.MemberID = Vehicle.MemberID
 ORDER BY Members.MemberID;
 
 -- 6.2 Show how many vehicles each member owns in descending order.
-SELECT Members.MemberID, Members.MFName, Members.MLName, COUNT(Vehicle.VehReg) AS 'vehicles owned' FROM Members
+SELECT COUNT(Vehicle.VehReg) AS 'vehicles owned', Members.MFName, Members.MLName, Members.MemberID FROM Members
 INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 GROUP BY Members.MemberID, Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
 
 -- 6.3 The number of vans driven by a particular engineer.
-SELECT EngVan.EngID, Engineer.EFName, Engineer.ELname, COUNT(*) AS 'number of vans driven' FROM EngVan
+SELECT COUNT(*) AS 'number of vans driven', Engineer.EFName, Engineer.ELname, EngVan.EngID FROM EngVan
 INNER JOIN Engineer ON Engineer.EngID = EngVan.EngID
 GROUP BY EngVan.EngID, Engineer.EFName, Engineer.ELName;
 
