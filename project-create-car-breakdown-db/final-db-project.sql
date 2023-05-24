@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS CarBreakdownCompany;
-CREATE DATABASE CarBreakdownCompany;
-USE CarBreakdownCompany;
+DROP DATABASE IF EXISTS car_breakdown_company;
+CREATE DATABASE car_breakdown_company;
+USE car_breakdown_company;
 
 /*******************************************************************
 ****************************** TASK 1 ****************************** 
@@ -198,3 +198,8 @@ SELECT Members.MFName, Members.MLName, COUNT(Vehicle.VehReg) FROM Members
 INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 GROUP BY Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
+
+-- 6.3 The number of vans driven by a particular engineer.
+SELECT EngVan.EngID, Engineer.EFName, Engineer.ELname, COUNT(*) AS 'number of vans' FROM EngVan
+INNER JOIN Engineer ON Engineer.EngID = EngVan.EngID
+GROUP BY EngVan.EngID, Engineer.EFName, Engineer.ELName;
