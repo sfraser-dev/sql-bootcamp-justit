@@ -47,3 +47,58 @@ SELECT enrollments.enrollment_id, students.student_number, subjects.subject_name
   FROM enrollments LEFT JOIN students ON enrollments.student_id = students.student_number
   LEFT JOIN subjects ON enrollments.subject_id = subjects.subject_id;
  
+-- -----------------------------------------------------------
+-- Lesson 8.9 - Case / When / Then / End statement,
+-- -----------------------------------------------------------
+-- (Task 8.9.1.1) Calculate teacher salary with bonus (it will show up in the CASE column of retuned 
+-- table, it will not affect the teacher table).
+SELECT trainer_name, trainer_dob, salary,
+  CASE 
+	WHEN salary <= 40000 THEN salary + 2000
+  END
+FROM teachers;
+
+-- (Task 8.9.1.2) Calculate teacher salary with bonus more parameters.
+SELECT trainer_name, trainer_dob, salary,
+  CASE
+  	WHEN salary <= 40000 THEN salary + 2000
+    WHEN salary BETWEEN 40001 AND 85000 THEN salary + 3000
+  END
+FROM teachers;
+
+-- (Task 8.9.1.3) Calculate teacher salary with bonus more parameters.
+SELECT trainer_name, trainer_dob, salary,
+  CASE
+  	WHEN salary <= 40000 THEN salary + 2000
+    WHEN salary BETWEEN 40001 AND 58000 THEN salary + 3000
+    WHEN salary >= 58001 THEN salary + 4000
+  END
+FROM teachers;
+
+-- (Task 8.9.1.3) Calculate teacher salary with bonus nicer column title.
+SELECT trainer_name, trainer_dob, salary,
+  CASE
+  	WHEN salary <= 40000 THEN salary + 2000
+    WHEN salary BETWEEN 40001 AND 58000 THEN salary + 3000
+    WHEN salary >= 58001 THEN salary + 4000
+  END AS 'salary with bonus'
+FROM teachers;
+
+-- (Challenge 8.9.1.1) Only return for Zak and Christian.
+SELECT trainer_name, trainer_dob, salary,
+  CASE
+  	WHEN salary <= 40000 THEN salary + 2000
+    WHEN salary BETWEEN 40001 AND 58000 THEN salary + 3000
+    WHEN salary >= 58001 THEN salary + 4000
+  END AS 'salary with bonus'
+FROM teachers WHERE trainer_name='Zak' OR trainer_name='Christian';
+
+-- (Challenge 8.9.1.2) Up until now, we've been using SELECT to *display* the
+-- data, now let's actually update the table permanently using UPDATE and SET.
+UPDATE teachers SET salary =
+  CASE
+  	WHEN salary <= 40000 THEN salary + 2000
+    WHEN salary BETWEEN 40001 AND 58000 THEN salary + 3000
+    WHEN salary >= 58001 THEN salary + 4000
+  END;
+  SELECT * FROM teachers;

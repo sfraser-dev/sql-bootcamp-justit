@@ -82,7 +82,7 @@ ALTER TABLE teachers MODIFY COLUMN salary DECIMAL(18,5) DEFAULT 30000.10;
 -- (Tasks 2.3.1, 2.3.2, 2.3.3) Adding data to a table.
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(1, "Zak", '1996-09-20',20000.3);
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(2, 'Tim','1994-01-01',15000.2);
-INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(3, 'Christain','1993-01-01',35900.3);
+INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary) VALUES(3, 'Christian','1993-01-01',35900.3);
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary)
   VALUES(4, 'Richard', '1969-01-01', 100900.3), (5, 'Waqas', '1922-01-01', 50000.2);
 DESCRIBE teachers;
@@ -288,16 +288,16 @@ SELECT teachers.trainer_id, teachers.trainer_name, subjects.subject_name FROM te
 -- This will result in records being duplicated and incorrect results."
 
 -- (Task 6.7.1.3) Create a query to SELECT all fields from subjects and teachers. Subjects should be the left table and teachers
--- should be the right. The ON clause should be on trainer_id from both tables. Include a WHERE trainer_name = ‘Christain’.
+-- should be the right. The ON clause should be on trainer_id from both tables. Include a WHERE trainer_name = ‘Christian’.
 SELECT * FROM subjects
   INNER JOIN teachers
   ON subjects.trainer_id = teachers.trainer_id
-  WHERE teachers.trainer_name='Christain'; 
+  WHERE teachers.trainer_name='Christian'; 
 
 -- (Challenge 6.7.1.1) We can DELETE data from one table using an INNER JOIN. Work out how to achieve this.
 DELETE subjects FROM subjects
   INNER JOIN teachers
   ON subjects.trainer_id = teachers.trainer_id
-  WHERE teachers.trainer_name='Christain';
+  WHERE teachers.trainer_name='Christian';
 SELECT * FROM subjects;  -- Subject row that made the inner join is removed.
 SELECT * FROM teachers;  -- Teachers table unaffected.
