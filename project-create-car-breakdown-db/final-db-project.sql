@@ -188,18 +188,24 @@ UPDATE Members SET MTID=2 WHERE MemberID=8;
 *******************************************************************/
 
 -- 6.1 Show all the vehicles that each member owns.
-SELECT Members.MFName, Members.MLName, Vehicle.VehMake, Vehicle.VehModel FROM Members
+SELECT Members.MemberID, Members.MFName, Members.MLName, Vehicle.VehMake, Vehicle.VehModel FROM Members
 INNER JOIN Vehicle
 ON Members.MemberID = Vehicle.MemberID
-ORDER BY Members.MFName;
+ORDER BY Members.MemberID;
 
 -- 6.2 Show how many vehicles each member owns in descending order.
-SELECT Members.MFName, Members.MLName, COUNT(Vehicle.VehReg) FROM Members
+SELECT Members.MemberID, Members.MFName, Members.MLName, COUNT(Vehicle.VehReg) AS 'vehicles owned' FROM Members
 INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
-GROUP BY Members.MFName, Members.MLName
+GROUP BY Members.MemberID, Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
 
 -- 6.3 The number of vans driven by a particular engineer.
-SELECT EngVan.EngID, Engineer.EFName, Engineer.ELname, COUNT(*) AS 'number of vans' FROM EngVan
+SELECT EngVan.EngID, Engineer.EFName, Engineer.ELname, COUNT(*) AS 'number of vans driven' FROM EngVan
 INNER JOIN Engineer ON Engineer.EngID = EngVan.EngID
 GROUP BY EngVan.EngID, Engineer.EFName, Engineer.ELName;
+
+-- 6.4 All vehicles that have broken down in a particular location along with member details.
+SELECT Breakdown.BDLoc AS 'breakdown location', Breakdown.VehReg, Members.MFName, Members.MLName FROM Breakdown 
+INNER JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
+INNER JOIN Members ON Vehicle.MemberID = Members.MemberID
+ORDER BY Breakdown.BDLoc;
