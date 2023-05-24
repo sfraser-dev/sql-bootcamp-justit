@@ -2,9 +2,9 @@ DROP DATABASE IF EXISTS CarBreakdownCompany;
 CREATE DATABASE CarBreakdownCompany;
 USE CarBreakdownCompany;
 
-/*****************
-***** TASK 1 ***** 
-*****************/
+/*******************************************************************
+****************************** TASK 1 ****************************** 
+*******************************************************************/
  
 -- Create tables for the database.
 CREATE TABLE Members (
@@ -22,8 +22,7 @@ CREATE TABLE Vehicle (
   VehModel varchar(10) NOT NULL,
   MemberID varchar(10) NOT NULL,
 
-  PRIMARY KEY (VehReg),
-  FOREIGN KEY (MemberID) REFERENCES Members (MemberID)
+  PRIMARY KEY (VehReg)
 );
 
 CREATE TABLE Engineer (
@@ -41,8 +40,7 @@ CREATE TABLE EngVan (
   EngID int NOT NULL,
   VMileage int NOT NULL,
 
-  PRIMARY KEY (VanReg),
-  FOREIGN KEY (EngID) REFERENCES Engineer (EngID)
+  PRIMARY KEY (VanReg)
 );
 
 CREATE TABLE Breakdown (
@@ -53,31 +51,26 @@ CREATE TABLE Breakdown (
   BDTIME time NOT NULL,
   BDLoc varchar(20) NOT NULL,
 
-  PRIMARY KEY (BDID),
-  FOREIGN KEY (VehReg) REFERENCES Vehicle (VehReg),
-  FOREIGN KEY (VanReg) REFERENCES EngVan (VanReg)
+  PRIMARY KEY (BDID)
 );
 
--- Set the foreign keys via the ALTER command.
+-- Set the foreign keys after table creation using the ALTER command.
 ALTER TABLE Vehicle
-ADD CONSTRAINT FK_Vehicle_MemberID
-FOREIGN KEY (MemberID) REFERENCES Members (MemberID);
+ADD CONSTRAINT FK_Vehicle_MemberID FOREIGN KEY (MemberID) REFERENCES Members (MemberID);
 
 ALTER TABLE EngVan
-ADD CONSTRAINT FK_EngVan_EngID
-FOREIGN KEY (EngID) REFERENCES Engineer (EngID);
+ADD CONSTRAINT FK_EngVan_EngID FOREIGN KEY (EngID) REFERENCES Engineer (EngID);
 
 ALTER TABLE Breakdown
-ADD CONSTRAINT FK_Breakdown_VehReg
-FOREIGN KEY (VehReg) REFERENCES Vehicle (VehReg);
+ADD CONSTRAINT FK_Breakdown_VehReg FOREIGN KEY (VehReg) REFERENCES Vehicle (VehReg);
 
 ALTER TABLE Breakdown
-ADD CONSTRAINT FK_Breakdown_VanReg
-FOREIGN KEY (VanReg) REFERENCES EngVan (VanReg);
+ADD CONSTRAINT FK_Breakdown_VanReg FOREIGN KEY (VanReg) REFERENCES EngVan (VanReg);
 
-/*****************
-***** TASK 2 ***** 
-*****************/
+
+/*******************************************************************
+****************************** TASK 2 ****************************** 
+*******************************************************************/
 
 -- Add data to the tables.
 INSERT INTO Members (MemberID, MFName, MLName, MLoc) VALUES
@@ -91,8 +84,11 @@ INSERT INTO Vehicle (VehReg, VehMake, VehModel, MemberID) VALUES
 ('ABC123', 'Honda', 'Civic', '1'),
 ('DEF456', 'Toyota', 'Camry', '2'),
 ('GHI789', 'Ford', 'F-150', '3'),
-('JKL012', 'Chevy', 'Silverado', '4'),
-('MNO345', 'Dodge', 'Ram', '5');
+('JKL123', 'Chevy', 'Silverado', '4'),
+('MNO345', 'Kia', 'Sportage', '5'),
+('PQR678', 'Ferrari', 'F40', '3'),
+('STU901', 'BMW', 'i5', '2'),
+('VWX234', 'Porsche', '911', '3');
 
 INSERT INTO Engineer (EngID, EFName, ELName) VALUES
 ('1', 'John', 'Doe'),
@@ -100,25 +96,30 @@ INSERT INTO Engineer (EngID, EFName, ELName) VALUES
 ('3', 'Michael', 'Brown');
 
 INSERT INTO EngVan (VanReg, VanMake, VanModel, EngID, VMileage) VALUES
-('RST321', 'Honda', 'Civic', '1', 10000),
+('LMN654', 'Honda', 'Hilux', '1', 10000),
+('OPQ987', 'Jeep', 'Wrangler', '2', 10000),
+('RST321', 'Honda', 'Civic', '3', 10000),
 ('UVW654', 'Toyota', 'Camry', '2', 20000),
-('XYZ987', 'Ford', 'F-150', '3', 30000);
+('XYZ987', 'Ford', 'F-150', '1', 30000);
 
 INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
-(1, 'ABC123', 'RST321', '2023-05-20', '09:45', 'New York'),
-(2, 'DEF456', 'UVW654', '2023-05-24', '17:45', 'Los Angeles'),
-(3, 'GHI789', 'XYZ987', '2023-05-24', '18:15', 'Chicago'),
-(4, 'ABC123', 'RST321', '2023-06-01', '18:00', 'Dallas'),
-(5, 'MNO345', 'XYZ987', '2023-06-12', '18:45', 'Miami'),
-(6, 'ABC123', 'RST321', '2023-06-23', '09:00', 'New York'),
-(7, 'DEF456', 'UVW654', '2023-06-28', '09:30', 'Los Angeles'),
-(8, 'JKL012', 'XYZ987', '2023-07-03', '22:30', 'Chicago'),
-(9, 'MNO345', 'RST321', '2023-07-18', '08:45', 'Dallas'),
-(10, 'JKL012', 'UVW654', '2023-08-012', '17:30', 'Miami');
+(1, 'ABC123', 'RST321', '2023-02-20', '09:45', 'New York'),
+(2, 'DEF456', 'UVW654', '2023-02-24', '17:45', 'Los Angeles'),
+(3, 'GHI789', 'XYZ987', '2023-02-24', '18:15', 'Chicago'),
+(4, 'ABC123', 'RST321', '2023-03-01', '18:00', 'New York'),
+(5, 'MNO345', 'XYZ987', '2023-03-12', '18:45', 'Miami'),
+(6, 'VWX234', 'OPQ987', '2023-03-23', '09:00', 'Chicago'),
+(7, 'DEF456', 'UVW654', '2023-04-28', '09:30', 'Los Angeles'),
+(8, 'JKL123', 'XYZ987', '2023-04-03', '22:30', 'Dallas'),
+(9, 'MNO345', 'RST321', '2023-04-18', '08:45', 'Miami'),
+(10, 'STU901', 'LMN654', '2023-04-27', '23:30', 'Los Angeles'),
+(11, 'PQR678', 'RST321', '2023-05-10', '17:15', 'Chicago'),
+(12, 'GHI789', 'OPQ987', '2023-05-20', '07:45', 'New York');
 
-/*****************
-***** TASK 3 ***** 
-*****************/
+
+/*******************************************************************
+****************************** TASK 3 ****************************** 
+*******************************************************************/
 
 -- 3.1 Names of members who live in NY.
 SELECT MFName, MLName FROM Members WHERE MLoc = 'New York';
@@ -147,9 +148,9 @@ SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM breakdown GROUP BY VehReg
 -- Return only the vehicles that have broken down more than once.
 SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
 
-/*****************
-***** TASK 4 ***** 
-*****************/
+/*******************************************************************
+****************************** TASK 4 ****************************** 
+*******************************************************************/
 
 -- Create membership type table.
 CREATE TABLE MshipType (
@@ -165,9 +166,10 @@ INSERT INTO MshipType (Type, MPrice) VALUES
 ('Silver', 59.99),
 ('Bronze', 39.99);
 
-/*****************
-***** TASK 5 ***** 
-*****************/
+/*******************************************************************
+****************************** TASK 5 ****************************** 
+*******************************************************************/
+
 -- Add MTID column to members, allow null and set it to FK.
 ALTER TABLE Members ADD MTID INT NULL;
 ALTER TABLE Members ADD CONSTRAINT Members_MTID_FKmembers FOREIGN KEY (MTID) REFERENCES MshipType (MTID);
@@ -177,3 +179,15 @@ UPDATE Members SET MTID=1 WHERE MemberID=2;
 UPDATE Members SET MTID=2 WHERE MemberID=3;
 UPDATE Members SET MTID=2 WHERE MemberID=4;
 UPDATE Members SET MTID=3 WHERE MemberID=5;
+UPDATE Members SET MTID=1 WHERE MemberID=6;
+UPDATE Members SET MTID=2 WHERE MemberID=7;
+UPDATE Members SET MTID=2 WHERE MemberID=8;
+
+/*******************************************************************
+****************************** TASK 6 ****************************** 
+*******************************************************************/
+
+-- 6.1 Show all the vehicles that each member owns.
+SELECT Members.MemberID, COUNT(Vehicle.VehReg) AS 'vehicles owned' FROM Members
+LEFT JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
+GROUP BY Members.MemberID;
