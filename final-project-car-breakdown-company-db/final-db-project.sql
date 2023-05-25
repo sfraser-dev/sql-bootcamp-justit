@@ -318,7 +318,7 @@ SELECT SUM(People.Age) AS 'sum of all ages' FROM People;
 -- Switch back to the car breakdown company database.
 USE car_breakdown_company;
 
--- 8.1 Reporting policy type in a temporary field using an if statement to duduce if it's a single-car or multi-car policy. 
+-- 8.1 Reporting policy type in a temporary field using an if statement to deduce if it's a single-car or multi-car policy. 
 SELECT
 COUNT(Vehicle.VehReg) AS 'vehicles owned',
 Members.MFName AS 'member first name',
