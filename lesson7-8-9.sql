@@ -48,7 +48,7 @@ SELECT enrollments.enrollment_id, students.student_number, subjects.subject_name
   LEFT JOIN subjects ON enrollments.subject_id = subjects.subject_id;
  
 -- -----------------------------------------------------------
--- Lesson 8.9 - Case / When / Then / End statement,
+-- Lesson 8.9 - Case / when / then / end statement.
 -- -----------------------------------------------------------
 -- (Task 8.9.1.1) Calculate teacher salary with bonus (it will show up in the CASE column of retuned 
 -- table, it will not affect the teacher table).
@@ -102,3 +102,22 @@ UPDATE teachers SET salary =
     WHEN salary >= 58001 THEN salary + 4000
   END;
   SELECT * FROM teachers;
+  
+  -- -----------------------------------------------------------
+-- Lesson 9.10 - Multiple joins.
+-- -----------------------------------------------------------
+-- (Task 9.10.1.1) Create a three table join (a multi-table join).
+SELECT *
+FROM enrollments
+-- Gives a enrollments-students view by joining enrollments into students
+RIGHT JOIN students ON enrollments.student_id = students.student_number 
+-- Gives an enrollments-students-subjects view by joining enrollments-students into subjects.
+RIGHT JOIN subjects ON subjects.subject_id = enrollments.subject_id;    
+
+-- (Task 9.10.1.2) Use a left join for the second join.
+SELECT *
+FROM enrollments
+-- Gives a enrollments-students view by joining enrollments into students
+RIGHT JOIN students ON enrollments.student_id = students.student_number
+-- Gives an enrollments-students-subjects view by joining subjects into enrollments-students.
+LEFT JOIN subjects ON subjects.subject_id = enrollments.subject_id;
