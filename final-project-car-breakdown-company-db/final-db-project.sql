@@ -298,16 +298,16 @@ INSERT INTO People VALUES
 ('Edgar', 'Ellison', 175.38, 42);
 
 -- Average function: find the average value of the records in a particular table's field. 
-SELECT ROUND(AVG(HeightInCM),2) AS 'average height' FROM People;
+SELECT ROUND(AVG(People.HeightInCM),2) AS 'average height' FROM People;
 
 -- Max function: find the maximum record value in a particular table's field. 
-SELECT MAX(Age) AS 'maximum age' FROM People;
+SELECT MAX(People.Age) AS 'maximum age' FROM People;
 
 -- Min function: find the minimum record value in a particular table's field. 
-SELECT MIN(Age) AS 'minimum age' FROM People;
+SELECT MIN(People.Age) AS 'minimum age' FROM People;
 
 -- Sum function: find the sum of all records in a particular table's field. 
-SELECT SUM(Age) AS 'sum of all ages' FROM People;
+SELECT SUM(People.Age) AS 'sum of all ages' FROM People;
 
 /*******************************************************************
 ****************************** TASK 8 ****************************** 
@@ -316,7 +316,7 @@ SELECT SUM(Age) AS 'sum of all ages' FROM People;
 -- Switch back to the car breakdown company database
 USE car_breakdown_company;
 
--- 8.1 Reporting the policy type by using an if statement to duduce if it's a single-car or multi-car. 
+-- 8.1 Reporting policy type in a temporary field using an if statement to duduce if it's a single-car or multi-car. 
 SELECT COUNT(Vehicle.VehReg) AS 'vehicles owned', Members.MFName AS 'member first name',
 Members.MLName AS 'member last name', Members.MemberID AS 'member ID',
 IF (COUNT(Vehicle.VehReg)>1, 'Multi-Car', 'Single-Car') AS 'policy type'
@@ -324,3 +324,17 @@ FROM Members
 INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 GROUP BY Members.MemberID, Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
+
+-- 8.2
+UPDATE Breakdown SET Breakdown.VehReg='ABC123' WHERE Breakdown.BDID=7;  -- 'ABC123' now has 3 breakdowns.
+UPDATE Breakdown SET Breakdown.VehReg='ABC123' WHERE Breakdown.BDID=10; -- 'STU901' now has 0 breakdowns.
+
+SELECT * FROM Vehicle
+LEFT JOIN Breakdown ON Vehicle.VehReg = Breakdown.VehReg;
+/*
+SELECT Breakdown.VehReg AS 'vehicle registration', COUNT(*) AS 'number of breakdowns'
+FROM Breakdown
+LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
+GROUP BY Breakdown.VehReg
+ORDER BY COUNT(*) DESC
+*/
