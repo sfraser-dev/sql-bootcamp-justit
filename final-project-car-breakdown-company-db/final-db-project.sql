@@ -115,7 +115,7 @@ INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
 (10, 'ABC123', 'LMN654', '2023-04-27', '23:30', 'Boston'),
 (11, 'PQR678', 'RST321', '2023-05-10', '17:15', 'Chicago'),
 (12, 'GHI789', 'OPQ987', '2023-05-20', '07:45', 'New York');
--- NB: 'STU901' is the only registered vehicle without a breakdown yet
+-- NB: 'STU901' is the only vehicle without a breakdown recorded
 
 /*******************************************************************
 ****************************** TASK 3 ****************************** 
@@ -149,7 +149,7 @@ SELECT COUNT(*) AS 'number of times vehicle "DEF456" has broken down' FROM Break
 -- 3.8 The number of vehicles that have broken down more than once.
 -- List the number of times each vehicle has broken down.
 SELECT VehReg AS 'vehicle registration', COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg;
--- Return only the vehicles that have broken down more than once.
+-- List only the vehicles that have broken down more than once.
 SELECT VehReg AS 'vehicle registration', COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
 
 /*******************************************************************
@@ -177,6 +177,7 @@ INSERT INTO MshipType (Type, MPrice) VALUES
 -- Add MTID column to members, allow null and set it to FK.
 ALTER TABLE Members ADD MTID INT NULL;
 ALTER TABLE Members ADD CONSTRAINT Members_MTID_FKmembers FOREIGN KEY (MTID) REFERENCES MshipType (MTID);
+
 -- Assign values to the foreign keys in Members. 
 UPDATE Members SET MTID=3 WHERE MemberID=1;
 UPDATE Members SET MTID=1 WHERE MemberID=2;
@@ -317,7 +318,7 @@ SELECT SUM(People.Age) AS 'sum of all ages' FROM People;
 -- Switch back to the car breakdown company database.
 USE car_breakdown_company;
 
--- 8.1 Reporting policy type in a temporary field using an if statement to duduce if it's a single-car or multi-car. 
+-- 8.1 Reporting policy type in a temporary field using an if statement to duduce if it's a single-car or multi-car policy. 
 SELECT
 COUNT(Vehicle.VehReg) AS 'vehicles owned',
 Members.MFName AS 'member first name',
@@ -328,8 +329,8 @@ INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 GROUP BY Members.MemberID, Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
 
--- 8.2 Display adjustment to next premium for each vehicle based on the number of times that vehicle has broken down.
--- Left join into vehicle table so vehicle registrations that haven't had a breakdown are still present.
+-- 8.2 Display adjustment to next premium in a temporary field for each vehicle based on the number of times that vehicle
+-- has broken down. Left join into vehicle table so vehicle registrations that haven't had a breakdown are still present.
 SELECT
 Vehicle.VehReg AS 'vehicle registration',
 COUNT(Breakdown.VehReg) AS 'number of breakdowns',
