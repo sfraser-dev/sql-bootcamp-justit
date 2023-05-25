@@ -112,10 +112,10 @@ INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
 (7, 'DEF456', 'UVW654', '2023-04-28', '09:30', 'Los Angeles'),
 (8, 'JKL123', 'XYZ987', '2023-04-03', '22:30', 'Dallas'),
 (9, 'MNO345', 'RST321', '2023-04-18', '08:45', 'Miami'),
-(10, 'STU901', 'LMN654', '2023-04-27', '23:30', 'Los Angeles'),
+(10, 'ABC123', 'LMN654', '2023-04-27', '23:30', 'Boston'),
 (11, 'PQR678', 'RST321', '2023-05-10', '17:15', 'Chicago'),
 (12, 'GHI789', 'OPQ987', '2023-05-20', '07:45', 'New York');
-
+-- NB: 'STU901' is the only registered vehicle without a breakdown yet
 
 /*******************************************************************
 ****************************** TASK 3 ****************************** 
@@ -214,7 +214,8 @@ INNER JOIN Engineer ON Engineer.EngID = EngVan.EngID
 GROUP BY EngVan.EngID, Engineer.EFName, Engineer.ELName;
 
 -- 6.4 All vehicles that have broken down in a particular location along with member details.
-SELECT Breakdown.BDLoc AS 'breakdown location', Breakdown.VehReg AS 'vehicle registration',
+SELECT Breakdown.BDLoc AS 'breakdown location', Breakdown.BDDATE AS 'breakdown date',
+Breakdown.VehReg AS 'vehicle registration',
 Members.MFName AS 'member first name', Members.MLName AS 'member last name'
 FROM Breakdown 
 INNER JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
@@ -222,8 +223,8 @@ INNER JOIN Members ON Vehicle.MemberID = Members.MemberID
 ORDER BY Breakdown.BDLoc;
 
 -- 6.5 List of all vehicles that broke down with member details and the engineer who attended.
--- Breakdown.BDID AS 'breakdown ID', Breakdown.VehReg AS 'broken down vehicle', Vehicle.VehMake, Vehicle.VehModel, Engineer.EFName, Engineer.ELName
-SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.VehReg AS 'broken down vehicle',
+SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.BDDATE AS 'breakdown date', Breakdown.VehReg AS 'broken down vehicle',
+Members.MFName AS 'member first name', Members.MLName AS 'member last name',
 Vehicle.VehMake AS 'vehicle make' , Vehicle.VehModel AS 'vehicle model',
 Engineer.EFName AS 'attending engineer first name', Engineer.ELName AS 'attending engineer last name'
 FROM Breakdown
@@ -244,8 +245,8 @@ LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
 WHERE Breakdown.BDDate BETWEEN '2023-03-20' AND '2023-04-20';
 
 -- 6.7.1 Show the breakdown dates and locations attended by each engineer.
-SELECT Breakdown.BDDATE AS 'breakdown date', Breakdown.BDLoc AS 'breakdown location', 
-Engineer.EFname AS 'engineer first name', Engineer.ELName AS 'engineer last name'
+SELECT Engineer.EFname AS 'engineer first name', Engineer.ELName AS 'engineer last name',
+Breakdown.BDDATE AS 'breakdown date', Breakdown.BDLoc AS 'breakdown location'
 FROM Breakdown 
 LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
@@ -264,9 +265,9 @@ WHERE Breakdown.BDTIME BETWEEN '12:00:00' AND '23:59:59'
 ORDER BY Breakdown.BDTIME;
 
 -- 6.7.3 List the engineers that attended breakdowns in New York.
-SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.BDDATE AS 'breakdown date', 
-Breakdown.BDLoc AS 'breakdown location', 
-Engineer.EFname AS 'engineer first name', Engineer.ELName AS 'engineer last name'
+SELECT Engineer.EFname AS 'engineer first name', Engineer.ELName AS 'engineer last name',
+Breakdown.BDID AS 'breakdown ID', Breakdown.BDDATE AS 'breakdown date', 
+Breakdown.BDLoc AS 'breakdown location'
 FROM Breakdown
 LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
@@ -325,16 +326,8 @@ INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 GROUP BY Members.MemberID, Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
 
--- 8.2
-UPDATE Breakdown SET Breakdown.VehReg='ABC123' WHERE Breakdown.BDID=7;  -- 'ABC123' now has 3 breakdowns.
-UPDATE Breakdown SET Breakdown.VehReg='ABC123' WHERE Breakdown.BDID=10; -- 'STU901' now has 0 breakdowns.
-
-SELECT * FROM Vehicle
-LEFT JOIN Breakdown ON Vehicle.VehReg = Breakdown.VehReg;
-/*
-SELECT Breakdown.VehReg AS 'vehicle registration', COUNT(*) AS 'number of breakdowns'
-FROM Breakdown
-LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
-GROUP BY Breakdown.VehReg
-ORDER BY COUNT(*) DESC
-*/
+-- 8.2 STILL TO DOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!
+SELECT Vehicle.VehReg, Breakdown.VehReg, COUNT(Breakdown.VehReg) FROM Vehicle
+LEFT JOIN Breakdown ON Vehicle.VehReg = Breakdown.VehReg
+GROUP BY Vehicle.VehReg
+ORDER BY COUNT(Breakdown.VehReg) DESC;
