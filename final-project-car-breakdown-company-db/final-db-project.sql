@@ -315,3 +315,12 @@ SELECT SUM(Age) AS 'sum of all ages' FROM People;
 
 -- Switch back to the car breakdown company database
 USE car_breakdown_company;
+
+-- 8.1 Reporting the policy type by using an if statement to duduce if it's a single-car or multi-car. 
+SELECT COUNT(Vehicle.VehReg) AS 'vehicles owned', Members.MFName AS 'member first name',
+Members.MLName AS 'member last name', Members.MemberID AS 'member ID',
+IF (COUNT(Vehicle.VehReg)>1, 'Multi-Car', 'Single-Car') AS 'policy type'
+FROM Members
+INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
+GROUP BY Members.MemberID, Members.MFName, Members.MLName
+ORDER BY COUNT(Vehicle.VehReg) DESC;
