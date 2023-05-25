@@ -115,7 +115,7 @@ INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
 (10, 'ABC123', 'LMN654', '2023-04-27', '23:30', 'Boston'),
 (11, 'PQR678', 'RST321', '2023-05-10', '17:15', 'Chicago'),
 (12, 'GHI789', 'OPQ987', '2023-05-20', '07:45', 'New York');
--- NB: 'STU901' is the only vehicle without a breakdown recorded
+-- NB: 'STU901' is the only vehicle without a breakdown recorded.
 
 /*******************************************************************
 ****************************** TASK 3 ****************************** 
