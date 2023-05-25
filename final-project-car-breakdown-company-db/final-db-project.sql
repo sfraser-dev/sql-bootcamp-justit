@@ -91,9 +91,9 @@ INSERT INTO Vehicle (VehReg, VehMake, VehModel, MemberID) VALUES
 ('VWX234', 'Porsche', '911', '3');
 
 INSERT INTO Engineer (EngID, EFName, ELName) VALUES
-('1', 'John', 'Doe'),
-('2', 'Jane', 'Smith'),
-('3', 'Michael', 'Brown');
+('1', 'Tim', 'Spanner'),
+('2', 'Freddy', 'Wrench'),
+('3', 'Joyce', 'Hammer');
 
 INSERT INTO EngVan (VanReg, VanMake, VanModel, EngID, VMileage) VALUES
 ('LMN654', 'Honda', 'Hilux', '1', 10000),
@@ -209,3 +209,6 @@ SELECT Breakdown.BDLoc AS 'breakdown location', Breakdown.VehReg, Members.MFName
 INNER JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
 INNER JOIN Members ON Vehicle.MemberID = Members.MemberID
 ORDER BY Breakdown.BDLoc;
+
+-- 6.5 List of all vehicles that broke down with member details and the engineer who attended.
+SELECT * FROM Breakdown INNER JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg; 
