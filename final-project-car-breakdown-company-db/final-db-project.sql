@@ -231,3 +231,14 @@ LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
 LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
 LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
+
+-- 6.6 List of all breakdowns with member and engineer details between Feb 20th and March 20th.
+SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.BDDate AS 'breakdown date', Breakdown.VehReg AS 'broken down vehicle',
+Vehicle.VehMake AS 'vehicle make' , Vehicle.VehModel AS 'vehicle model',
+Engineer.EFName AS 'attending engineer first name', Engineer.ELName AS 'attending engineer last name'
+FROM Breakdown 
+LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
+LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
+LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
+
