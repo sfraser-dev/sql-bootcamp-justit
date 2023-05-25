@@ -106,7 +106,7 @@ UPDATE teachers SET salary =
   -- -----------------------------------------------------------
 -- Lesson 9.10 - Multiple joins.
 -- -----------------------------------------------------------
--- (Task 9.10.1.1) Create a three table join (a multi-table join).
+-- (Task 9.10.1.1) Create a three table join (a multi-table join), there will be null cells.
 SELECT *
 FROM enrollments
 -- Gives a enrollments-students view by joining enrollments into students
@@ -114,10 +114,33 @@ RIGHT JOIN students ON enrollments.student_id = students.student_number
 -- Gives an enrollments-students-subjects view by joining enrollments-students into subjects.
 RIGHT JOIN subjects ON subjects.subject_id = enrollments.subject_id;    
 
--- (Task 9.10.1.2) Use a left join for the second join.
+-- (Task 9.10.1.2) Use a left join for the second join, there will be null cells.
 SELECT *
 FROM enrollments
 -- Gives a enrollments-students view by joining enrollments into students
 RIGHT JOIN students ON enrollments.student_id = students.student_number
 -- Gives an enrollments-students-subjects view by joining subjects into enrollments-students.
 LEFT JOIN subjects ON subjects.subject_id = enrollments.subject_id;
+
+-- (Task 9.10.1.2) Change both joins to inner joins, there will no longer be null cells.
+SELECT *
+FROM enrollments
+-- Gives a enrollments-students view by joining students into enrollments.
+INNER JOIN students ON enrollments.student_id = students.student_number
+-- Gives an enrollments-students-subjects view by joining subjects into enrollments-students.
+INNER JOIN subjects ON subjects.subject_id = enrollments.subject_id;
+
+-- (Task 9.10.2.1) Find out what course each student is on and who their teacher is.
+SELECT subjects.subject_name, CONCAT(students.first_name, " ", students.last_name) AS 'student_name', teachers.trainer_name
+FROM teachers 
+INNER JOIN subjects ON subjects.trainer_id = teachers.trainer_id
+INNER JOIN enrollments ON enrollments.subject_id = subjects.subject_id
+INNER JOIN students ON students.student_number = enrollments.student_id;
+
+-- (Task 9.10.2.2) From the last query, change the third inner join to a right join. 
+SELECT subjects.subject_name, CONCAT(students.first_name, " ", students.last_name) AS 'student_name', teachers.trainer_name
+FROM teachers 
+INNER JOIN subjects ON subjects.trainer_id = teachers.trainer_id
+INNER JOIN enrollments ON enrollments.subject_id = subjects.subject_id
+-- Students not enrolled in any courses show up with null values.
+RIGHT JOIN students ON students.student_number = enrollments.student_id;  
