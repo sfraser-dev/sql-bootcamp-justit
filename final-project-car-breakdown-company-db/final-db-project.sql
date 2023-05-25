@@ -232,13 +232,21 @@ LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
 LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
 LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
 
--- 6.6 List of all breakdowns with member and engineer details between Feb 20th and March 20th.
-SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.BDDate AS 'breakdown date', Breakdown.VehReg AS 'broken down vehicle',
-Vehicle.VehMake AS 'vehicle make' , Vehicle.VehModel AS 'vehicle model',
+-- 6.6 List of all breakdowns with member and engineer details between March 20th and April 20th.
+SELECT Breakdown.BDDate AS 'breakdown date', Breakdown.BDID AS 'breakdown ID',
+Members.MFName AS 'member first name', Members.MLName AS 'member last name',
 Engineer.EFName AS 'attending engineer first name', Engineer.ELName AS 'attending engineer last name'
 FROM Breakdown 
 LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
 LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
-LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
+WHERE Breakdown.BDDate BETWEEN '2023-03-20' AND '2023-04-20';
 
+-- 6.7.1 Show the breakdown dates and locations attended by each engineer.
+SELECT Breakdown.BDDATE AS 'breakdown date', Breakdown.BDLoc AS 'breakdown location', 
+Engineer.EFname AS 'engineer first name', Engineer.ELName AS 'engineer last name'
+FROM Breakdown 
+LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
+ORDER BY Engineer.EFName;
