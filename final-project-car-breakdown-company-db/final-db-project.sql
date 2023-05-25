@@ -314,11 +314,13 @@ SELECT SUM(People.Age) AS 'sum of all ages' FROM People;
 ****************************** TASK 8 ****************************** 
 *******************************************************************/
 
--- Switch back to the car breakdown company database
+-- Switch back to the car breakdown company database.
 USE car_breakdown_company;
 
 -- 8.1 Reporting policy type in a temporary field using an if statement to duduce if it's a single-car or multi-car. 
-SELECT COUNT(Vehicle.VehReg) AS 'vehicles owned', Members.MFName AS 'member first name',
+SELECT
+COUNT(Vehicle.VehReg) AS 'vehicles owned',
+Members.MFName AS 'member first name',
 Members.MLName AS 'member last name', Members.MemberID AS 'member ID',
 IF (COUNT(Vehicle.VehReg) > 1, 'Multi-Car', 'Single-Car') AS 'policy type'
 FROM Members
@@ -328,7 +330,9 @@ ORDER BY COUNT(Vehicle.VehReg) DESC;
 
 -- 8.2 Display adjustment to next premium for each vehicle based on the number of times that vehicle has broken down.
 -- Left join into vehicle table so vehicle registrations that haven't had a breakdown are still present.
-SELECT Vehicle.VehReg AS 'vehicle registration', COUNT(Breakdown.VehReg) AS 'number of breakdowns',
+SELECT
+Vehicle.VehReg AS 'vehicle registration',
+COUNT(Breakdown.VehReg) AS 'number of breakdowns',
 CASE
   WHEN COUNT(Breakdown.VehReg) > 2 THEN '+10%'
   WHEN COUNT(Breakdown.VehReg) = 2 THEN '+5%'
