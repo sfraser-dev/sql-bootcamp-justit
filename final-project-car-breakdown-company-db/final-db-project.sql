@@ -211,9 +211,12 @@ INNER JOIN Members ON Vehicle.MemberID = Members.MemberID
 ORDER BY Breakdown.BDLoc;
 
 -- 6.5 List of all vehicles that broke down with member details and the engineer who attended.
--- Breakdown.BDID AS 'breakdown ID', Breakdown.VehReg AS 'broken down vehicle', Vehicle.VehMake, Vehicle.VehModel
-SELECT *
+-- Breakdown.BDID AS 'breakdown ID', Breakdown.VehReg AS 'broken down vehicle', Vehicle.VehMake, Vehicle.VehModel, Engineer.EFName, Engineer.ELName
+SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.VehReg AS 'broken down vehicle',
+Vehicle.VehMake AS 'vehicle make' , Vehicle.VehModel AS 'vehicle model',
+Engineer.EFName AS 'attending engineer first name', Engineer.ELName AS 'attending engineer last name'
 FROM Breakdown
-INNER JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
+LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
-LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID;
+LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
