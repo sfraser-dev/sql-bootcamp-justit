@@ -122,31 +122,35 @@ INSERT INTO Breakdown (BDID, VehReg, VanReg, BDDATE, BDTIME, BDLoc) VALUES
 *******************************************************************/
 
 -- 3.1 Names of members who live in NY.
-SELECT MFName, MLName FROM Members WHERE MLoc = 'New York';
+SELECT MFName AS 'first name', MLName AS 'last name' FROM Members WHERE MLoc = 'New York';
 
 -- 3.2 All vehicles registered to the company.
-SELECT VehReg, VehMake, VehModel FROM Vehicle;
+SELECT VehReg AS 'vehicle registration', VehMake AS 'vehicle make', VehModel AS 'vehicle model' FROM Vehicle;
 
 -- 3.3 The number of engineers that work for the company.
-SELECT COUNT(*) AS 'number of engineers' FROM Engineer;
+SELECT COUNT(*) AS 'number of engineers in the company' FROM Engineer;
 
 -- 3.4 The number of members registered.
-SELECT COUNT(*) AS 'number of members' FROM Members;
+SELECT COUNT(*) AS 'number of registered members' FROM Members;
 
--- 3.5 All the breakdowns after June.
-SELECT * FROM Breakdown WHERE BDDATE >= '2023-07-01';
+-- 3.5 All the breakdowns after March.
+SELECT BDID AS 'breakdown ID', VehReg AS 'vehicle reg', VanReg AS 'van registration',
+BDDATE AS 'breakdown date', BDTIME AS 'breakdown time', BDLoc AS 'breakdown location'
+FROM Breakdown WHERE BDDATE >= '2023-04-01';
 
--- 3.6 All the breakdowns between June 1st and June 30th inclusive.
-SELECT * FROM Breakdown WHERE BDDate BETWEEN '2023-06-01' AND '2023-06-30';
+-- 3.6 All the breakdowns between March 1st and March 31st inclusive.
+SELECT BDID AS 'breakdown ID', VehReg AS 'vehicle reg', VanReg AS 'van registration',
+BDDATE AS 'breakdown date', BDTIME AS 'breakdown time', BDLoc AS 'breakdown location'
+FROM Breakdown WHERE BDDate BETWEEN '2023-03-01' AND '2023-03-31';
 
 -- 3.7 The number of times member vehicle with registration 'DEF456' has broken down.
 SELECT COUNT(*) AS 'number of times vehicle "DEF456" has broken down' FROM Breakdown WHERE VehReg = 'DEF456'; 
 
 -- 3.8 The number of vehicles that have broken down more than once.
 -- List the number of times each vehicle has broken down.
-SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg;
+SELECT VehReg AS 'vehicle registration', COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg;
 -- Return only the vehicles that have broken down more than once.
-SELECT VehReg, COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
+SELECT VehReg AS 'vehicle registration', COUNT(*) AS 'number of breakdowns' FROM Breakdown GROUP BY VehReg HAVING COUNT(*) >= 2;
 
 /*******************************************************************
 ****************************** TASK 4 ****************************** 
