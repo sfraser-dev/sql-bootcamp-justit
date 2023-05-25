@@ -23,7 +23,9 @@ INSERT INTO subjects VALUES (7, 7, 'DB', '2022-07-15');
 SELECT * FROM subjects;
 SELECT * FROM students;
 -- (Task 7.8.1.2) Add data to the foreign key columns.
-INSERT INTO enrollments (subject_id, student_id) VALUES (2, 1), (4, 5), (1, 2), (3, 3), (7, 4), (5, 6), (6, 7);
+INSERT INTO enrollments (subject_id, student_id)
+VALUES (2, 1), (1, 2), (3, 3), (7, 4), (4, 5), (5, 6), (6, 7), 
+  (4, 1), (4, 2), (4, 3), (4, 4);
 SELECT * FROM enrollments;
 -- (Task 7.8.1.3) Left join. Query returns eight rows (8th row of subjects is null).
 SELECT * FROM students LEFT JOIN enrollments ON student_number = student_id;
@@ -138,9 +140,28 @@ INNER JOIN enrollments ON enrollments.subject_id = subjects.subject_id
 INNER JOIN students ON students.student_number = enrollments.student_id;
 
 -- (Task 9.10.2.2) From the last query, change the third inner join to a right join. 
-SELECT subjects.subject_name, CONCAT(students.first_name, " ", students.last_name) AS 'student_name', teachers.trainer_name
+SELECT subjects.subject_name, teachers.trainer_name, CONCAT(students.first_name, " ", students.last_name) AS 'student_name'
 FROM teachers 
 INNER JOIN subjects ON subjects.trainer_id = teachers.trainer_id
 INNER JOIN enrollments ON enrollments.subject_id = subjects.subject_id
 -- Students not enrolled in any courses show up with null values.
-RIGHT JOIN students ON students.student_number = enrollments.student_id;  
+RIGHT JOIN students ON students.student_number = enrollments.student_id; 
+
+-- (Challenge 9.10.1) All of the students taking Richard's SWDev course.
+SELECT subjects.subject_name, teachers.trainer_name, CONCAT(students.first_name, " ", students.last_name) AS 'student_name'  
+FROM teachers 
+INNER JOIN subjects ON subjects.trainer_id = teachers.trainer_id
+INNER JOIN enrollments ON enrollments.subject_id = subjects.subject_id
+INNER JOIN students ON students.student_number = enrollments.student_id
+WHERE teachers.trainer_name = 'Richard' AND subjects.subject_name='SWDev';
+
+
+-- (Challenge 9.10.2 and 9.10.3) Any student's enrolled in multiple courses / cohorts?
+-- (Question on the sheet was a little difficult to decipher, not sure if this is what's being asked for exactly. Also
+-- it will be highly dependent on the data we used to populate our tables (data wasn't given, we created our own data)). 
+SELECT COUNT(*) AS 'number of courses enrolled in', enrollments.student_id, students.first_name, students.last_name
+FROM enrollments
+INNER JOIN students ON students.student_number = enrollments.student_id
+GROUP BY enrollments.student_id, students.first_name, students.last_name
+ORDER BY COUNT(*) DESC
+-- 

@@ -177,7 +177,7 @@ SELECT * FROM teachers WHERE trainer_name='Richard';
 
 -- (Task 3.5.1.4) Add two new teacher rows.
 INSERT INTO teachers(trainer_id, trainer_name, trainer_dob, salary)
-  VALUES(7, 'Richard', '2000-06-01', 90000), (8, 'Zak', '2001-05-01', 89000);
+  VALUES(7, 'Linus', '2000-06-01', 90000), (8, 'Zak', '2001-05-01', 89000);
 SELECT * FROM teachers;
 
 -- (Task 3.5.1.5) Bring up only the newly added teachers Zak and Richard.
