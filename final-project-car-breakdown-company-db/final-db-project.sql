@@ -251,9 +251,67 @@ LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
 ORDER BY Engineer.EFName;
 
-SELECT *
+-- 6.7.2 List of all breakdowns with member and engineer details that occurred in the afternoon.
+SELECT Breakdown.BDDate AS 'breakdown date', Breakdown.BDTIME AS 'breakdown time',
+Breakdown.BDID AS 'breakdown ID', Members.MFName AS 'member first name', Members.MLName AS 'member last name',
+Engineer.EFName AS 'attending engineer first name', Engineer.ELName AS 'attending engineer last name'
 FROM Breakdown
 LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
 LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
-LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
+WHERE Breakdown.BDTIME BETWEEN '12:00:00' AND '23:59:59'
+ORDER BY Breakdown.BDTIME;
+
+-- 6.7.3 List the engineers that attended breakdowns in New York.
+SELECT Breakdown.BDID AS 'breakdown ID', Breakdown.BDDATE AS 'breakdown date', 
+Breakdown.BDLoc AS 'breakdown location', 
+Engineer.EFname AS 'engineer first name', Engineer.ELName AS 'engineer last name'
+FROM Breakdown
+LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
+WHERE Breakdown.BDLoc = 'New York';
+
+/*******************************************************************
+****************************** TASK 7 ****************************** 
+*******************************************************************/
+
+-- Create a new database.
+DROP DATABASE IF EXISTS humans;
+CREATE DATABASE humans;
+USE humans;
+
+-- Create a new table in the database.
+CREATE TABLE People (
+  FirstName varchar(20) NOT NULL,
+  LastName varchar(20) NOT NULL,
+  HeightInCM FLOAT(5,2) NOT NULL,
+  Age INT NOT NULL
+);  
+
+-- Populate the new database.
+INSERT INTO People VALUES
+('Alice', 'Aitken', 150.15, 32),
+('Bob', 'Butler', 195.22, 38),
+('Charles', 'Cooper', 165.45, 55),
+('Diana', 'Drapper', 160.87, 27),
+('Edgar', 'Ellison', 175.38, 42);
+
+-- Average function: find the average value of the records in a particular table's field. 
+SELECT ROUND(AVG(HeightInCM),2) AS 'average height' FROM People;
+
+-- Max function: find the maximum record value in a particular table's field. 
+SELECT MAX(Age) AS 'maximum age' FROM People;
+
+-- Min function: find the minimum record value in a particular table's field. 
+SELECT MIN(Age) AS 'minimum age' FROM People;
+
+-- Sum function: find the sum of all records in a particular table's field. 
+SELECT SUM(Age) AS 'sum of all ages' FROM People;
+
+/*******************************************************************
+****************************** TASK 8 ****************************** 
+*******************************************************************/
+
+-- Switch back to the car breakdown company database
+USE car_breakdown_company;
