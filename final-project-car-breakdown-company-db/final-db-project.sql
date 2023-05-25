@@ -192,24 +192,31 @@ UPDATE Members SET MTID=2 WHERE MemberID=8;
 *******************************************************************/
 
 -- 6.1 Show all the vehicles that each member owns.
-SELECT Members.MemberID, Members.MFName, Members.MLName, Vehicle.VehMake, Vehicle.VehModel FROM Members
-INNER JOIN Vehicle
-ON Members.MemberID = Vehicle.MemberID
+SELECT Members.MemberID AS 'member ID', Members.MFName AS 'member first name', Members.MLName AS 'member last name',
+Vehicle.VehMake AS 'vehicle make', Vehicle.VehModel AS 'vehicle model'
+FROM Members
+INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 ORDER BY Members.MemberID;
 
 -- 6.2 Show how many vehicles each member owns in descending order.
-SELECT COUNT(Vehicle.VehReg) AS 'vehicles owned', Members.MFName, Members.MLName, Members.MemberID FROM Members
+SELECT COUNT(Vehicle.VehReg) AS 'vehicles owned', Members.MFName AS 'member first name',
+Members.MLName AS 'member last name', Members.MemberID AS 'member ID'
+FROM Members
 INNER JOIN Vehicle ON Members.MemberID = Vehicle.MemberID
 GROUP BY Members.MemberID, Members.MFName, Members.MLName
 ORDER BY COUNT(Vehicle.VehReg) DESC;
 
 -- 6.3 The number of vans driven by a particular engineer.
-SELECT COUNT(*) AS 'number of vans driven', Engineer.EFName, Engineer.ELname, EngVan.EngID FROM EngVan
+SELECT COUNT(*) AS 'number of vans driven', Engineer.EFName AS 'engineer first name',
+Engineer.ELname AS 'engineer last name', EngVan.EngID AS 'engineer ID'
+FROM EngVan
 INNER JOIN Engineer ON Engineer.EngID = EngVan.EngID
 GROUP BY EngVan.EngID, Engineer.EFName, Engineer.ELName;
 
 -- 6.4 All vehicles that have broken down in a particular location along with member details.
-SELECT Breakdown.BDLoc AS 'breakdown location', Breakdown.VehReg, Members.MFName, Members.MLName FROM Breakdown 
+SELECT Breakdown.BDLoc AS 'breakdown location', Breakdown.VehReg AS 'vehicle registration',
+Members.MFName AS 'member first name', Members.MLName AS 'member last name'
+FROM Breakdown 
 INNER JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
 INNER JOIN Members ON Vehicle.MemberID = Members.MemberID
 ORDER BY Breakdown.BDLoc;
