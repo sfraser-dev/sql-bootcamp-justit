@@ -250,3 +250,10 @@ FROM Breakdown
 LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
 LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID
 ORDER BY Engineer.EFName;
+
+SELECT *
+FROM Breakdown
+LEFT JOIN EngVan ON Breakdown.VanReg = EngVan.VanReg
+LEFT JOIN Vehicle ON Breakdown.VehReg = Vehicle.VehReg
+LEFT JOIN Members ON Vehicle.MemberID = Members.MemberID
+LEFT JOIN Engineer ON EngVan.EngID = Engineer.EngID;
