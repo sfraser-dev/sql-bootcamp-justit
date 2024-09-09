@@ -1,1 +1,1 @@
-SQL lessons from justit bootcamp.
+SQL lessons from the JustIT bootcamp.
